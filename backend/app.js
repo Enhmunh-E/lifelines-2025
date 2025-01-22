@@ -86,6 +86,43 @@ app.post("/table", checkAccessCode, (req, res) => {
   res.json(userData.tables[tableName]);
 });
 
+// Update specific data with a specific field equals to the param from a table
+app.put("/data/:table/:field/:value", checkAccessCode, (req, res) => {
+  console.log("AYOOO");
+  const { table, field, value } = req.params;
+  const userData = JSON.parse(fs.readFileSync(req.userFilePath));
+  if (!userData.tables || !userData.tables[table]) {
+    return res.status(404).send("Table not found");
+  }
+  const tableType = userData.tables[table].type;
+  for (const key in req.body) {
+    if (typeof req.body[key] !== tableType[key]) {
+      return res.status(400).send("Invalid data type");
+    }
+  }
+  for (const key in req.body) {
+    if (!tableType[key] || !/^[a-zA-Z]+$/.test(key)) {
+      return res
+        .status(400)
+        .send("Invalid key or keys must only consist of letters");
+    }
+  }
+  let updated = false;
+  console.log(req.body);
+  userData.tables[table].data = userData.tables[table].data.map((item) => {
+    if (item[field] === value) {
+      updated = true;
+      return { ...item, ...req.body };
+    }
+    return item;
+  });
+  if (!updated) {
+    return res.status(404).send("Data not found");
+  }
+  fs.writeFileSync(req.userFilePath, JSON.stringify(userData, null, 2));
+  res.json("Successfully updated");
+});
+
 // Create data for a specific table
 app.post("/data/:table", checkAccessCode, (req, res) => {
   const table = req.params.table;
@@ -137,6 +174,22 @@ app.get("/data/:table", checkAccessCode, (req, res) => {
   const start = (page - 1) * limit;
   const end = page * limit;
   res.json(userData.tables[table].data.slice(start, end));
+});
+
+// Read specific data with a specific field equals to the param from a table
+app.get("/data/:table/:field/:value", checkAccessCode, (req, res) => {
+  const { table, field, value } = req.params;
+  const userData = JSON.parse(fs.readFileSync(req.userFilePath));
+  if (!userData.tables || !userData.tables[table]) {
+    return res.status(404).send("Table not found");
+  }
+  const result = userData.tables[table].data.filter(
+    (item) => item[field] === value
+  );
+  if (result.length === 0) {
+    return res.status(404).send("Data not found");
+  }
+  res.json(result);
 });
 
 // Update data in a specific table
