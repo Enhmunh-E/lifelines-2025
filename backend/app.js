@@ -108,7 +108,6 @@ app.put("/data/:table/:field/:value", checkAccessCode, (req, res) => {
     }
   }
   let updated = false;
-  console.log(req.body);
   userData.tables[table].data = userData.tables[table].data.map((item) => {
     if (item[field] === value) {
       updated = true;

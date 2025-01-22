@@ -5,6 +5,18 @@
     "dangerlocations": {
       "data": [
         {
+          "$id": 12,
+          "$created_at": "2025-01-22T19:12:06.878Z",
+          "lat": 25.329985077128164,
+          "lng": 51.429061889648445
+        },
+        {
+          "$id": 11,
+          "$created_at": "2025-01-22T19:11:46.488Z",
+          "lat": 25.329829919387155,
+          "lng": 51.44468307495118
+        },
+        {
           "$id": 10,
           "$created_at": "2025-01-22T15:33:08.220Z",
           "lat": 25.508430408479978,
@@ -69,10 +81,24 @@
         "lng": "number",
         "lat": "number"
       },
-      "size": 10
+      "size": 12
     },
     "emergencylocations": {
       "data": [
+        {
+          "$id": 5,
+          "$created_at": "2025-01-22T19:11:59.181Z",
+          "lat": 25.31660969953166,
+          "lng": 51.43946643606805,
+          "finished": false
+        },
+        {
+          "$id": 4,
+          "$created_at": "2025-01-22T19:11:38.179Z",
+          "lat": 25.31660969953166,
+          "lng": 51.43946643606805,
+          "finished": false
+        },
         {
           "$id": 3,
           "$created_at": "2025-01-22T16:57:29.309Z",
@@ -100,10 +126,88 @@
         "lat": "number",
         "finished": "boolean"
       },
-      "size": 3
+      "size": 5
     },
     "emergencychats": {
       "data": [
+        {
+          "$id": 18,
+          "$created_at": "2025-01-22T18:59:27.834Z",
+          "chatid": "M1737572367818",
+          "messages": [
+            {
+              "sender": "user",
+              "message": "Help! Woman unconscious after shootout. Not moving, shallow breathing. Blood on chest. Pale skin. Eyes closed. No response to shaking. What do I do???",
+              "timestamp": 1737572988565
+            },
+            {
+              "sender": "Dr. Muhammed",
+              "message": "Check for safety. If safe, call for help. Check breathing and pulse. If absent, start CPR immediately. Place hands on center of chest, push hard and fast, 100-120 compressions per minute. After 30 compressions, give 2 rescue breaths. Continue CPR. For bleeding, apply direct pressure with clean cloth. If conscious, keep her still, elevate legs. Don't move her unnecessarily. Keep her warm. Stay with her until help arrives. If you have first aid training, use it. Remember, your safety comes first. Update me on any changes.",
+              "timestamp": 1737572988665
+            }
+          ]
+        },
+        {
+          "$id": 17,
+          "$created_at": "2025-01-22T18:55:22.186Z",
+          "chatid": "K1737572122174",
+          "messages": [
+            {
+              "sender": "user",
+              "message": "test",
+              "timestamp": 1737572128231
+            },
+            {
+              "sender": "Dr. Muhammed",
+              "message": "To perform CPR on an adult, first check for responsiveness and call emergency services. Place the person on their back, and begin chest compressions: push hard and fast in the center of the chest at a rate of 100-120 per minute, compressing at least 2 inches deep. If trained, give 2 rescue breaths after every 30 compressions. Continue until help arrives or the person shows signs of life. If untrained, perform hands-only CPR with continuous compressions. Use an AED if available, following its instructions. Always prioritize safety and seek certified training for proper technique.",
+              "timestamp": 1737572128331
+            }
+          ]
+        },
+        {
+          "$id": 16,
+          "$created_at": "2025-01-22T18:53:46.020Z",
+          "chatid": "U1737572026012",
+          "messages": [
+            {
+              "sender": "user",
+              "message": "hello",
+              "timestamp": 1737572068007
+            }
+          ]
+        },
+        {
+          "$id": 15,
+          "$created_at": "2025-01-22T18:45:12.899Z",
+          "chatid": "K1737571512889",
+          "messages": [
+            {
+              "sender": "user",
+              "message": "test",
+              "timestamp": 1737571518082
+            },
+            {
+              "sender": "user",
+              "message": "hello",
+              "timestamp": 1737571528921
+            },
+            {
+              "sender": "user",
+              "message": "Last message",
+              "timestamp": 1737571849728
+            },
+            {
+              "sender": "doctor",
+              "message": "asdfasdf",
+              "timestamp": 1737570907530
+            },
+            {
+              "sender": "doctor sun",
+              "message": "12asdf asdfasdf a",
+              "timestamp": 1737570907530
+            }
+          ]
+        },
         {
           "$id": 14,
           "$created_at": "2025-01-22T18:39:34.698Z",
@@ -148,7 +252,7 @@
         "chatid": "string",
         "messages": "object"
       },
-      "size": 14
+      "size": 18
     }
   }
 }

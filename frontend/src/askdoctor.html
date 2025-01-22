@@ -96,7 +96,7 @@
           const messageDiv = document.createElement("div");
           messageDiv.classList.add("p-2", "rounded", "m-2", "bg-blue-100");
           messageDiv.innerHTML = `
-            <p class="text-sm font-semibold text-blue-500">${sender}</p>
+            <p class="text-sm capitalize font-semibold text-blue-500">${sender}</p>
             <p class="text-sm text-gray-700">${message}</p>
             <p class="text-xs text-gray-500">${new Date(
               timestamp
@@ -177,13 +177,11 @@
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  chatid: uniqid + "",
+                  chatid: uniqid,
                   messages: [],
                 }),
               }
             );
-            const json = await data.json();
-            console.log(json);
           } catch (e) {
             console.log(e);
           }
