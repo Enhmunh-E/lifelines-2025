@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emergency</title>
+    <link href="./output.css" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  </head>
+  <body
+    class="bg-gray-100 flex items-center justify-center flex-col gap-4 h-screen"
+  >
+    <h1 class="text-xl md:text-2xl font-semibold text-[#e3342f]">Emergency!</h1>
+    <div id="map" style="height: 500px; width: 500px"></div>
+    <div class="flex flex-row gap-4">
+      <button id="helpRequest" class="bg-red-500 text-white px-4 py-2 rounded">
+        Help Request
+      </button>
+    </div>
+
+    <script>
+      let clickedLat;
+      let clickedLon;
+      let positionLat;
+      let positionLon;
+
+      var redIcon = new L.Icon({
+        iconUrl: "assets/danger.png",
+        iconSize: [32, 32],
+        iconAnchor: [12, 32],
+        popupAnchor: [1, -32],
+        // shadowSize: [24, 24],
+      });
+
+      var yellowIcon = new L.Icon({
+        iconUrl: "assets/warning.png",
+        iconSize: [32, 32],
+        iconAnchor: [12, 32],
+        popupAnchor: [1, -32],
+        // shadowSize: [24, 24],
+      });
+
+      var locationIcon = new L.Icon({
+        iconUrl: "assets/location.png",
+        iconSize: [24, 24],
+        iconAnchor: [12, 24],
+        popupAnchor: [1, -24],
+        // shadowSize: [24, 24],
+      });
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            positionLat = lat;
+            positionLon = lon;
+
+            var map = L.map("map").setView([lat, lon], 13);
+
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+              attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            }).addTo(map);
+
+            var positionMarker = L.marker([positionLat, positionLon], {
+              icon: locationIcon,
+            })
+              .addTo(map)
+              .openPopup();
+
+            var emergencyMarker;
+
+            map.on("click", (e) => {
+              clickedLat = e.latlng.lat;
+              clickedLon = e.latlng.lng;
+
+              if (emergencyMarker) {
+                map.removeLayer(emergencyMarker);
+              }
+
+              emergencyMarker = L.marker([clickedLat, clickedLon], {
+                icon: redIcon,
+              })
+                .addTo(map)
+                .openPopup();
+            });
+          });
+        } else {
+          alert("Geolocation is not supported by this browser.");
+        }
+      });
+
+      document
+        .getElementById("helpRequest")
+        .addEventListener("click", function () {
+          alert("Help request sent!");
+          // Add your help request logic here
+        });
+
+      // document
+      //   .getElementById("dangerArea")
+      //   .addEventListener("click", async () => {
+      //     //   alert("Danger area marked!");
+      //     // Add your danger area logic here
+      //     try {
+      //       const data = await fetch(
+      //         "http://localhost:3000/data/dangerlocations",
+      //         {
+      //           method: "POST",
+      //           headers: {
+      //             "access-code": "2e49be06fd210b6e5682c61ab57795e8",
+      //             "user-id": "2de9fff728571194864b8490f66ea4e7",
+      //             "Content-Type": "application/json",
+      //           },
+      //           body: JSON.stringify({
+      //             lat: clickedLat,
+      //             lng: clickedLon,
+      //           }),
+      //         }
+      //       );
+      //       const json = await data.json();
+      //       console.log(json);
+      //     } catch (e) {
+      //       console.log(e);
+      //     }
+      //   });
+    </script>
+  </body>
+</html>

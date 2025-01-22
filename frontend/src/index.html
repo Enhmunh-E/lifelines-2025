@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lifelines</title>
+    <link href="./output.css" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body class="bg-gray-100">
+    <div
+      class="flex items-center justify-center w-full h-screen gap-4 flex-col lg:flex-row"
+    >
+      <!-- Card -->
+      <a
+        class="p-4 bg-red-100 border border-red-300 rounded-lg cursor-pointer flex flex-col gap-2 items-center justify-center md:min-h-64 min-w-64 hover:bg-red-200 transition-all"
+        href="./emergency.html"
+      >
+        <i
+          data-lucide="briefcase-medical"
+          style="width: 64px; height: 64px; color: #e3342f"
+        ></i>
+        <h1 class="text-xl md:text-2xl font-semibold text-[#e3342f]">
+          Emergency!
+        </h1>
+      </a>
+      <!-- Card -->
+      <a
+        class="p-4 bg-green-100 border border-green-300 rounded-lg cursor-pointer flex flex-col gap-2 items-center justify-center md:min-h-64 min-w-64 hover:bg-green-200 transition-all"
+        href="./ask-a-doctor.html"
+      >
+        <i
+          data-lucide="user"
+          style="width: 64px; height: 64px; color: #16a34a"
+        ></i>
+        <h1 class="text-xl md:text-2xl font-semibold text-green-600">
+          Ask a doctor
+        </h1>
+      </a>
+      <!-- Card -->
+      <a
+        class="p-4 bg-yellow-100 border border-yellow-300 rounded-lg cursor-pointer flex flex-col gap-2 items-center justify-center md:min-h-64 min-w-64 hover:bg-yellow-200 transition-all"
+        href="./dangermap.html"
+      >
+        <i
+          data-lucide="map"
+          style="width: 64px; height: 64px; color: #ca8a04"
+        ></i>
+        <h1 class="text-xl md:text-2xl font-semibold text-yellow-600">Map</h1>
+      </a>
+    </div>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

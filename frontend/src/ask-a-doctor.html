@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ask a Doctor</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        margin: 0;
+      }
+      #chat-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #ccc;
+        padding: 10px;
+        overflow-y: auto;
+      }
+      #message-input {
+        display: flex;
+        border-top: 1px solid #ccc;
+      }
+      #message-input input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-top: 1px solid #ccc;
+      }
+      #message-input button {
+        padding: 10px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+      }
+      #message-input button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="chat-container"></div>
+    <div id="message-input">
+      <input type="text" id="message" placeholder="Type your message here..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+      const socket = new WebSocket("ws://localhost:3000");
+
+      socket.onopen = function () {
+        console.log("Connected to the server");
+      };
+
+      socket.onmessage = function (event) {
+        const chatContainer = document.getElementById("chat-container");
+        const message = document.createElement("div");
+        message.textContent = event.data;
+        chatContainer.appendChild(message);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      };
+
+      function sendMessage() {
+        const input = document.getElementById("message");
+        const message = input.value;
+        if (message) {
+          socket.send(message);
+          input.value = "";
+        }
+      }
+    </script>
+  </body>
+</html>
