@@ -16,7 +16,7 @@
     <div id="map" style="height: 500px; width: 500px"></div>
     <div class="flex flex-row gap-4">
       <button id="helpRequest" class="bg-red-500 text-white px-4 py-2 rounded">
-        Help Request
+        Request for Help
       </button>
     </div>
 
@@ -95,7 +95,39 @@
 
       document
         .getElementById("helpRequest")
-        .addEventListener("click", function () {
+        .addEventListener("click", async () => {
+          let posLat = clickedLat,
+            posLon = clickedLat;
+          if (!clickedLat || !clickedLon) {
+            if (!positionLat || !positionLon) {
+              alert("Please mark the location on the map!");
+              return;
+            }
+            posLat = positionLat;
+            posLon = positionLon;
+          }
+          try {
+            const data = await fetch(
+              "http://localhost:3000/data/emergencylocations",
+              {
+                method: "POST",
+                headers: {
+                  "access-code": "2e49be06fd210b6e5682c61ab57795e8",
+                  "user-id": "2de9fff728571194864b8490f66ea4e7",
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  lat: posLat,
+                  lng: posLon,
+                  finished: false,
+                }),
+              }
+            );
+            const json = await data.json();
+            console.log(json);
+          } catch (e) {
+            console.log(e);
+          }
           alert("Help request sent!");
           // Add your help request logic here
         });
