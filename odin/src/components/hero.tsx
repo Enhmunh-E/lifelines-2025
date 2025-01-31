@@ -4,7 +4,7 @@ export const Hero = () => {
   return (
     <section className="flex items-center justify-center h-[502px] flex-col gap-8 p-4">
       <Image
-        src="/hero-bg.png"
+        src="/hero-bg.svg"
         alt="hero-bg"
         fill
         className=" object-center object-contain"
@@ -23,7 +23,7 @@ export const Hero = () => {
         <br /> where network outages and poor connectivity render technology
         useless.
       </h2>
-      <h3 className="text-xs lg:text-lg">
+      <h3 className="text-xs lg:text-lg z-10">
         Created by{" "}
         <Link href="https://www.qatar.cmu.edu/" className="underline">
           CMU-Q

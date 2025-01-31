@@ -20,7 +20,7 @@ export const Why = () => {
         //   gap: "20px",
         // }}
       >
-        <div className="flex flex-col p-5 rounded-lg border bg-white">
+        <div className="flex flex-col p-5 rounded-lg border bg-white hover:shadow-lg transition-all duration-200 cursor-default">
           <h3 className="pb-3 flex flex-row gap-2 text-md  md:text-lg items-center">
             <CrossIcon />
             Saving Lives in Crisis Zones
@@ -32,7 +32,7 @@ export const Why = () => {
             contributions directly impact people in need.
           </p>
         </div>
-        <div className="flex flex-col p-5 rounded-lg border bg-white">
+        <div className="flex flex-col p-5 rounded-lg border bg-white hover:shadow-lg transition-all duration-200 cursor-default">
           <h3 className="pb-3 flex flex-row gap-2 text-md  md:text-lg items-center">
             <WifiHighIcon />
             Bridging the Digital Divide in Emergencies
@@ -44,7 +44,7 @@ export const Why = () => {
             infrastructure collapses.
           </p>
         </div>
-        <div className="flex flex-col p-5 rounded-lg border bg-white">
+        <div className="flex flex-col p-5 rounded-lg border bg-white hover:shadow-lg transition-all duration-200 cursor-default">
           <h3 className="pb-3 flex flex-row gap-2 text-md  md:text-lg items-center">
             <GithubIcon color="black" />
             Open-Source for Greater Impact
@@ -56,7 +56,7 @@ export const Why = () => {
             can help make the platform stronger and more accessible.
           </p>
         </div>
-        <div className="flex flex-col p-5 rounded-lg border bg-white">
+        <div className="flex flex-col p-5 rounded-lg border bg-white hover:shadow-lg transition-all duration-200 cursor-default">
           <h3 className="pb-3 flex flex-row gap-2 text-md  md:text-lg items-center">
             <BriefcaseMedicalIcon />
             Empowering First Responders and Humanitarian Efforts
@@ -68,7 +68,7 @@ export const Why = () => {
             resources, and save lives more effectively.
           </p>
         </div>
-        <div className="flex flex-col p-5 rounded-lg border bg-white">
+        <div className="flex flex-col p-5 rounded-lg border bg-white hover:shadow-lg transition-all duration-200 cursor-default">
           <h3 className="pb-3 flex flex-row gap-2 text-md  md:text-lg items-center">
             <RibbonIcon />
             Enhancing Global Crisis Preparedness
@@ -80,7 +80,7 @@ export const Why = () => {
             communities are better prepared for emergencies.
           </p>
         </div>
-        <div className="flex flex-col p-5 rounded-lg border bg-white">
+        <div className="flex flex-col p-5 rounded-lg border bg-white hover:shadow-lg transition-all duration-200 cursor-default">
           <h3 className="pb-3 flex flex-row gap-2 text-md  md:text-lg items-center">
             <Smile />
             Leveraging AI for Good
@@ -92,7 +92,7 @@ export const Why = () => {
             assistance more accessible.
           </p>
         </div>
-        <div className="flex flex-col p-5 rounded-lg border bg-white">
+        <div className="flex flex-col p-5 rounded-lg border bg-white hover:shadow-lg transition-all duration-200 cursor-default">
           <h3 className="pb-3 flex flex-row gap-2 text-md  md:text-lg items-center">
             <PersonStandingIcon />
             Ethical Tech Development in High-Stakes Environments
@@ -104,7 +104,7 @@ export const Why = () => {
             prioritizes human lives over profit.
           </p>
         </div>
-        <div className="flex flex-col p-5 col-span-2 rounded-lg border bg-white">
+        <div className="flex flex-col p-5 col-span-2 rounded-lg border bg-white hover:shadow-lg transition-all duration-200 cursor-default">
           <h3 className="pb-3 flex flex-row gap-2 text-md  md:text-lg items-center">
             <EarthIcon />A Chance to Be Part of Something Bigger
           </h3>

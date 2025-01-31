@@ -37,7 +37,7 @@ export const Header = () => {
             Contribute
           </Button>
         </Link>
-        <div className=" lg:hidden">
+        <div className="lg:hidden">
           <Sheet>
             <SheetTrigger>
               <MenuIcon />
