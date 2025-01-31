@@ -1,21 +1,69 @@
-# ODN Project
+<p align="center">
+<img src="img/ODIN.png">
+</p>
 
-- By team Byte Us: Enkhmunkh Enkhbayar, Furqan Saeed, Sun Choi, Sherkhan Bakdaulet
+# ODIN - Open-Source Deployable Infrastructure Network
 
-## Description
+## Overview
 
-The following project addresses critical communication needs in crisis zones like Gaza and Lebanon, where traditional infrastructure is often destroyed. We are deploying low-cost, Arduino-based nodes to create a decentralized network, all powered by mini solar panels for standalone functionality. This system enables urgent requests, telemedicine, and humanitarian coordination in areas cut off from central services. Where the people specifically affected are the humanitarian personnel and civilians on ground.
+[ODIN](https://lifelines-odin.vercel.app/) is an open-source initiative dedicated to providing **resilient, AI-powered infrastructure** for crisis zones. Our mission is to **empower first responders, medical professionals, and affected communities** with **reliable connectivity, AI-driven medical support, and real-time crisis mapping** in areas with limited or no network access.
 
-## How to install and run the project
+## Features
 
-1. Clone the repository
-2. Install node modules to the each folder backend and frontend
-3. Run the backend server by opening going in the folder backend and running the command `nodemon app.js`
-4. Run the frontend server by opening going in the folder frontend and opening the index.html file
-5. You can now use the application
+- **AI-Powered Medical Expertise**  
+  - 24/7 certified AI-driven medical assistance for first aid and diagnostics.
+  - Offline functionality for critical medical guidance.
+  
+- **Emergency & Danger Pin System**  
+  - Place **Emergency Pins** to alert rescue teams.
+  - Mark **Danger Zones** (e.g., rifle shoot-outs, unstable structures) for real-time safety updates.
+  
+- **Offline & Low-Bandwidth Support**  
+  - Works in areas with poor or no connectivity through decentralized data storage.
+  - Peer-to-peer (P2P) communication support for local data sharing.
+  
+- **Secure & Encrypted Communication**  
+  - End-to-end encrypted emergency messaging.
+  - Secure broadcasting of alerts and crisis updates.
+  
+## Why Contribute?
 
-## Development
+ODIN is an **open-source** project, meaning your contributions can help save lives. Here’s why you should join us:
 
-Run the following commands:
-npx tailwindcss -i ./src/input.css -o ./src/output.css --watch
-nodemon app.js
+- **Make a Global Impact** – Your code can assist rescue teams and crisis-affected communities worldwide.
+- **Advance Ethical AI** – Help develop **AI-powered medical tools** that prioritize accessibility and accuracy.
+- **Improve Crisis Response** – Work on real-time mapping, **P2P communication**, and **low-bandwidth networks**.
+- **Open-Source for Good** – Contribute to technology that serves **humanitarian and disaster relief efforts**.
+
+## Getting Started
+
+1. **Clone the Repository**  
+   ```sh
+   gh repo clone Enhmunh-E/lifelines-2025 
+   cd odin
+   ```
+2. **Install Dependencies**  
+   ```sh
+   npm install  # or pip install -r requirements.txt (for Python-based components)
+   ```
+3. **Run the Application**  
+   ```sh
+   npm start  # or python app.py
+   ```
+4. **Contribute!**  
+   - Check the **Issues** tab for feature requests and bug fixes.
+   - Submit **pull requests** to enhance the project.
+
+## Community & Support
+
+- [GitHub Issues](https://github.com/your-repo/odin/issues) – Report bugs and request features.
+- [Discord](https://discord.gg/your-invite) – Join discussions with the community.
+- [Email Support](mailto:support@odinproject.org) – Reach out for direct assistance.
+
+## License
+
+ODIN is licensed under the **MIT License**, making it free and open for anyone to use and contribute to.
+
+---
+
+We believe that **technology should not fail when it is needed the most**. Join ODIN and help build a world where crisis response is smarter, faster, and more effective.
