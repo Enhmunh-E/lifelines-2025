@@ -46,11 +46,9 @@ ODIN is an **open-source** project, meaning your contributions can help save liv
    ```sh
    npm install  # or pip install -r requirements.txt (for Python-based components)
    ```
-3. **Run the Application**  
-   ```sh
-   npm start  # or python app.py
-   ```
-4. **Contribute!**  
+3. **Make direct changes to the frontend files**
+4. **Generate Your User ID and Access Code to Create Your Own Database**
+5. **Contribute!**  
    - Check the **Issues** tab for feature requests and bug fixes.
    - Submit **pull requests** to enhance the project.
 
