@@ -18,7 +18,9 @@
       <div
         id="messages"
         class="flex-1 min-h-[500px] max-h-[500x] overflow-y-scroll overlflow-x-hidden bg-white border rounded-xl"
-      ></div>
+      >
+        <div id="response"></div>
+      </div>
       <form id="form" class="flex flex-row gap-2">
         <input
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -28,7 +30,7 @@
           required
         />
         <button
-          id="dangerArea"
+          id="send"
           type="submit"
           class="bg-blue-500 text-white px-4 py-2 rounded"
         >
@@ -36,50 +38,53 @@
         </button>
       </form>
     </div>
-
     <script>
       var chatid = localStorage.getItem("chatid");
-
       const form = document.getElementById("form");
-      const input = document.getElementById("input");
+      const input = document.getElementById("message");
       const messages = document.getElementById("messages");
-
+      const button = document.getElementById("send");
       let allMessages = [];
+      let responseText = "";
 
       const sendMessage = async (message) => {
-        try {
-          const data = await fetch(
-            `http://localhost:3000/data/emergencychats/chatid/${chatid}`,
-            {
-              method: "PUT",
-              headers: {
-                "access-code": "2e49be06fd210b6e5682c61ab57795e8",
-                "user-id": "2de9fff728571194864b8490f66ea4e7",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                chatid: chatid,
-                messages: [
-                  ...allMessages,
-                  {
-                    sender: "user",
-                    message: message,
-                    timestamp: Date.now(),
-                  },
-                ],
-              }),
-            }
-          );
-          const json = await data.json();
-          allMessages = [
-            ...allMessages,
-            { sender: "user", message, timestamp: Date.now() },
-          ];
-        } catch (e) {
-          console.log(e);
-        }
+        input.innerHTML = "";
+        button.ariaDisabled = true;
+        input.innerHTML = "Sending...";
+        input.ariaDisabled = true;
+        responseText = "";
+        allMessages = [
+          ...allMessages,
+          { sender: "user", message, timestamp: Date.now() },
+        ];
+        const data = await fetch(`http://localhost:3000/ollama`, {
+          method: "POST",
+          headers: {
+            // "access-code": "2e49be06fd210b6e5682c61ab57795e8",
+            // "user-id": "2de9fff728571194864b8490f66ea4e7",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            text: message,
+          }),
+        });
+        const json = await data.json();
+        const cleanMessage = await json.message.content
+          .split("</think>")
+          .slice(-1)[0];
+        allMessages = [
+          ...allMessages,
+          {
+            sender: "doctor",
+            message: cleanMessage,
+            timestamp: Date.now(),
+          },
+        ];
+        showMessages();
+        input.innerHTML = "";
+        button.ariaDisabled = false;
+        input.ariaDisabled = false;
       };
-
       document.getElementById("form").addEventListener("submit", (e) => {
         e.preventDefault();
         const message = document.getElementById("message").value;
@@ -103,88 +108,6 @@
             ).toLocaleString()}</p>
           `;
           messagesDiv.appendChild(messageDiv);
-        }
-      };
-
-      const messageInitialization = async () => {
-        console.log(chatid);
-        if (chatid == null) {
-          // Means this is the first time the user is visiting the page
-          var randLetter = String.fromCharCode(
-            65 + Math.floor(Math.random() * 26)
-          );
-          var uniqid = randLetter + Date.now();
-          localStorage.setItem("chatid", uniqid);
-          try {
-            const data = await fetch(
-              "http://localhost:3000/data/emergencychats",
-              {
-                method: "POST",
-                headers: {
-                  "access-code": "2e49be06fd210b6e5682c61ab57795e8",
-                  "user-id": "2de9fff728571194864b8490f66ea4e7",
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  chatid: uniqid + "",
-                  messages: [],
-                }),
-              }
-            );
-            const json = await data.json();
-            console.log(json);
-          } catch (e) {
-            console.log(e);
-          }
-        }
-        setInterval(() => {
-          getMessages();
-        }, 1000);
-      };
-
-      messageInitialization();
-
-      const getMessages = async () => {
-        try {
-          const data = await fetch(
-            `http://localhost:3000/data/emergencychats/chatid/${chatid}`,
-            {
-              method: "GET",
-              headers: {
-                "access-code": "2e49be06fd210b6e5682c61ab57795e8",
-                "user-id": "2de9fff728571194864b8490f66ea4e7",
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          const json = await data.json();
-          allMessages = json[0].messages;
-          showMessages();
-        } catch (e) {
-          try {
-            var randLetter = String.fromCharCode(
-              65 + Math.floor(Math.random() * 26)
-            );
-            var uniqid = randLetter + Date.now();
-            localStorage.setItem("chatid", uniqid);
-            const data = await fetch(
-              "http://localhost:3000/data/emergencychats",
-              {
-                method: "POST",
-                headers: {
-                  "access-code": "2e49be06fd210b6e5682c61ab57795e8",
-                  "user-id": "2de9fff728571194864b8490f66ea4e7",
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  chatid: uniqid,
-                  messages: [],
-                }),
-              }
-            );
-          } catch (e) {
-            console.log(e);
-          }
         }
       };
     </script>

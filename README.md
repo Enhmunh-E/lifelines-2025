@@ -13,3 +13,9 @@ The following project addresses critical communication needs in crisis zones lik
 3. Run the backend server by opening going in the folder backend and running the command `nodemon app.js`
 4. Run the frontend server by opening going in the folder frontend and opening the index.html file
 5. You can now use the application
+
+## Development
+
+Run the following commands:
+npx tailwindcss -i ./src/input.css -o ./src/output.css --watch
+nodemon app.js

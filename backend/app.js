@@ -1,4 +1,5 @@
 const express = require("express");
+const ollama = require("ollama");
 const fs = require("fs");
 const crypto = require("crypto");
 const cors = require("cors");
@@ -244,6 +245,16 @@ app.delete("/data/:table/:id", checkAccessCode, (req, res) => {
     }
   }
   return res.json("Data not found");
+});
+
+app.post("/ollama", async (req, res) => {
+  const { text } = req.body;
+  const streamResponse = await ollama.default.chat({
+    model: "deepseek-r1:1.5b",
+    messages: [{ role: "user", content: text }],
+    stream: false,
+  });
+  res.json(streamResponse);
 });
 
 app.listen(port, () => {
