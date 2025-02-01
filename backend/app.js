@@ -250,7 +250,7 @@ app.delete("/data/:table/:id", checkAccessCode, (req, res) => {
 app.post("/ollama", async (req, res) => {
   const { text } = req.body;
   const streamResponse = await ollama.default.chat({
-    model: "deepseek-r1:7b",
+    model: "deepseek-r1:1.5b",
     messages: [
       {
         role: "system",
