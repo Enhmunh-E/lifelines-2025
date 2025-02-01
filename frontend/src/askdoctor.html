@@ -5,6 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Doctor Chat</title>
     <link href="./output.css" rel="stylesheet" />
+    <style>
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        color: #333;
+        display: none;
+      }
+
+      #messages {
+        flex: 1;
+        min-height: 500px;
+        max-height: 500px;
+        overflow-y: auto;
+        background: white;
+        border-radius: 10px;
+        padding: 10px;
+      }
+    </style>
   </head>
   <body
     class="bg-gray-100 flex items-center justify-center w-screen h-screen flex-col"
@@ -28,16 +54,14 @@
       </svg>
       Go Back
     </a>
+    <div id="loading-screen" class="loading-screen">
+      Loading<span id="loading-dots">.</span>
+    </div>
     <h1 class="text-xl md:text-2xl font-semibold text-blue-500 text-center">
       Real-Time Chat with a Doctor
     </h1>
     <div class="flex flex-col gap-4 w-screen md:w-[500px] p-4">
-      <div
-        id="messages"
-        class="flex-1 min-h-[500px] max-h-[500x] overflow-y-scroll overlflow-x-hidden bg-white border rounded-xl"
-      >
-        <div id="response"></div>
-      </div>
+      <div id="messages" class="overflow-y-auto"></div>
       <form id="form" class="flex flex-row gap-2">
         <input
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -51,82 +75,112 @@
           type="submit"
           class="bg-blue-500 text-white px-4 py-2 rounded"
         >
-          send
+          Send
         </button>
       </form>
     </div>
     <script>
-      var chatid = localStorage.getItem("chatid");
+      sessionStorage.clear();
       const form = document.getElementById("form");
       const input = document.getElementById("message");
-      const messages = document.getElementById("messages");
+      const messagesDiv = document.getElementById("messages");
       const button = document.getElementById("send");
-      let allMessages = [];
-      let responseText = "";
+      const loadingScreen = document.getElementById("loading-screen");
+      const loadingDots = document.getElementById("loading-dots");
+
+      let allMessages = JSON.parse(sessionStorage.getItem("messages")) || [];
+
+      let dotInterval;
+      const startLoadingAnimation = () => {
+        let dots = 1;
+        dotInterval = setInterval(() => {
+          dots = (dots % 3) + 1; // Cycle 1 → 2 → 3 → 1
+          loadingDots.textContent = ".".repeat(dots);
+        }, 500);
+      };
+
+      const stopLoadingAnimation = () => {
+        clearInterval(dotInterval);
+        loadingDots.textContent = "."; // Reset to single dot
+      };
 
       const sendMessage = async (message) => {
-        input.innerHTML = "";
-        button.ariaDisabled = true;
-        input.innerHTML = "Sending...";
-        input.ariaDisabled = true;
-        responseText = "";
-        allMessages = [
-          ...allMessages,
-          { sender: "user", message, timestamp: Date.now() },
-        ];
-        const data = await fetch(`http://localhost:3000/ollama`, {
-          method: "POST",
-          headers: {
-            // "access-code": "2e49be06fd210b6e5682c61ab57795e8",
-            // "user-id": "2de9fff728571194864b8490f66ea4e7",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            text: message,
-          }),
-        });
-        const json = await data.json();
-        const cleanMessage = await json.message.content
-          .split("</think>")
-          .slice(-1)[0];
-        allMessages = [
-          ...allMessages,
-          {
+        input.value = "";
+        button.disabled = true;
+        loadingScreen.style.display = "flex";
+        startLoadingAnimation();
+
+        allMessages.push({ sender: "user", message, timestamp: Date.now() });
+        saveAndRenderMessages();
+
+        try {
+          const response = await fetch(`http://localhost:3000/ollama`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: message }),
+          });
+          const json = await response.json();
+          const cleanMessage = json.message.content
+            .split("</think>")
+            .slice(-1)[0];
+
+          allMessages.push({
             sender: "doctor",
             message: cleanMessage,
             timestamp: Date.now(),
-          },
-        ];
-        showMessages();
-        input.innerHTML = "";
-        button.ariaDisabled = false;
-        input.ariaDisabled = false;
+          });
+        } catch (error) {
+          allMessages.push({
+            sender: "doctor",
+            message: "Error getting response.",
+            timestamp: Date.now(),
+          });
+        }
+
+        saveAndRenderMessages();
+        button.disabled = false;
+        loadingScreen.style.display = "none";
+        stopLoadingAnimation();
       };
-      document.getElementById("form").addEventListener("submit", (e) => {
+
+      form.addEventListener("submit", (e) => {
         e.preventDefault();
-        const message = document.getElementById("message").value;
-        if (message != "") {
+        const message = input.value.trim();
+        if (message) {
           sendMessage(message);
         }
       });
 
-      const showMessages = () => {
-        const messagesDiv = document.getElementById("messages");
+      const saveAndRenderMessages = () => {
+        sessionStorage.setItem("messages", JSON.stringify(allMessages));
         messagesDiv.innerHTML = "";
-        for (let i = 0; i < allMessages.length; i++) {
-          const { sender, message, timestamp } = allMessages[i];
+
+        allMessages.forEach(({ sender, message, timestamp }) => {
           const messageDiv = document.createElement("div");
-          messageDiv.classList.add("p-2", "rounded", "m-2", "bg-blue-100");
+          messageDiv.classList.add(
+            "p-2",
+            "rounded",
+            "m-2",
+            sender === "user" ? "bg-blue-100" : "bg-green-100"
+          );
           messageDiv.innerHTML = `
             <p class="text-sm capitalize font-semibold text-blue-500">${sender}</p>
-            <p class="text-sm text-gray-700">${message}</p>
+            <p class="text-sm text-gray-700">${message
+              .replace(/\*\*(.*?)\*\*/g, "<b>$1</b>")
+              .replace(/\*(.*?)\*/g, "<i>$1</i>")}</p>
             <p class="text-xs text-gray-500">${new Date(
               timestamp
             ).toLocaleString()}</p>
           `;
           messagesDiv.appendChild(messageDiv);
-        }
+        });
+
+        // Auto-scroll only if user was at bottom
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
       };
+
+      // Load messages on page load
+      saveAndRenderMessages();
     </script>
   </body>
 </html>
