@@ -11,6 +11,13 @@
   <body
     class="bg-gray-100 flex items-center justify-center w-screen h-screen flex-col"
   >
+    <a class="absolute left-4 top-4 flex flex-row" href="./index.html">
+      <i
+        data-lucide="chevron-left"
+        style="width: 24px; height: 24px; color: black"
+      ></i>
+      Go Back
+    </a>
     <h1 class="text-xl md:text-2xl font-semibold text-blue-500 text-center">
       Real-Time Chat with a Doctor
     </h1>
@@ -38,6 +45,10 @@
         </button>
       </form>
     </div>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons();
+    </script>
     <script>
       var chatid = localStorage.getItem("chatid");
       const form = document.getElementById("form");
@@ -57,7 +68,7 @@
           ...allMessages,
           { sender: "user", message, timestamp: Date.now() },
         ];
-        const data = await fetch(`http://localhost:3000/ollama`, {
+        const data = await fetch(`http://172.20.103.161:3000/ollama`, {
           method: "POST",
           headers: {
             // "access-code": "2e49be06fd210b6e5682c61ab57795e8",
@@ -110,6 +121,10 @@
           messagesDiv.appendChild(messageDiv);
         }
       };
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons();
     </script>
   </body>
 </html>

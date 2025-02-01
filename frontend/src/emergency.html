@@ -12,6 +12,13 @@
   <body
     class="bg-gray-100 flex items-center justify-center flex-col gap-4 h-screen"
   >
+    <a class="absolute left-4 top-4 flex flex-row" href="./index.html">
+      <i
+        data-lucide="chevron-left"
+        style="width: 24px; height: 24px; color: black"
+      ></i>
+      Go Back
+    </a>
     <h1 class="text-xl md:text-2xl font-semibold text-[#e3342f]">Emergency!</h1>
     <div id="map" style="height: 500px; width: 500px"></div>
     <div class="flex flex-row gap-4">
@@ -159,6 +166,10 @@
       //       console.log(e);
       //     }
       //   });
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons();
     </script>
   </body>
 </html>

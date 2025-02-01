@@ -7,7 +7,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "*" }));
 
 // Middleware to check access code
 function checkAccessCode(req, res, next) {
@@ -250,8 +250,15 @@ app.delete("/data/:table/:id", checkAccessCode, (req, res) => {
 app.post("/ollama", async (req, res) => {
   const { text } = req.body;
   const streamResponse = await ollama.default.chat({
-    model: "deepseek-r1:1.5b",
-    messages: [{ role: "user", content: text }],
+    model: "deepseek-r1:7b",
+    messages: [
+      {
+        role: "system",
+        content:
+          "No innapropriate responses or requests. You are a medical emergency doctor. Provide clear and concise medical advice based on the user's request. Assume there are no external resources avaiable to the user. Avoid unnecessary details but provide meaningful assistance. No hallucinations. No follow-up questions allowed. Don't answer non medical requests. Respond normally when requests are normal and not innapropriate.",
+      },
+      { role: "user", content: text },
+    ],
     stream: false,
   });
   res.json(streamResponse);
